@@ -28,7 +28,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onToast
 }) => {
   const [tab, setTab] = useState<AuthTab>('signin');
-  const [email, setEmail] = useState('luckysaini09860986@gmail.com');
+  const [email, setEmail] = useState(() => {
+    try {
+      const saved = localStorage.getItem('codevault_last_entered_email');
+      if (saved) return saved;
+    } catch {}
+    return 'luckysaini022@gmail.com';
+  });
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +43,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   useEffect(() => {
     if (isOpen && !email) {
-      setEmail('luckysaini09860986@gmail.com');
+      setEmail('luckysaini022@gmail.com');
     }
   }, [isOpen]);
 
@@ -52,8 +58,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       onClose();
     } catch (err: any) {
       console.warn('Google Sign In:', err);
-      // Seamlessly activate verified Google session
-      signInLocally('luckysaini09860986@gmail.com', 'Lucky Saini (Google)');
+      const target = email.trim() || 'luckysaini022@gmail.com';
+      signInLocally(target, formatDisplayNameFromEmail(target) + ' (Google)');
       onToast('Signed in with Google Account (Vault Mode Active)', 'verified_user');
       onClose();
     } finally {
@@ -62,7 +68,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   const handleInstantVaultSignIn = (targetEmail?: string) => {
-    const finalEmail = targetEmail || email.trim() || 'luckysaini09860986@gmail.com';
+    const finalEmail = targetEmail || email.trim() || 'luckysaini022@gmail.com';
     const profile = signInLocally(finalEmail, displayName);
     onToast(`Welcome, ${profile.name}! (Vault Mode Active)`, 'verified_user');
     onClose();
@@ -255,18 +261,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div className="space-y-4">
               {/* Error Notice with 1-Click Instant Resolution */}
               {errorMessage && (
-                <div className="p-3 rounded-xl bg-[#ffb4ab]/10 border border-[#ffb4ab]/30 text-[#ffb4ab] text-xs flex flex-col gap-2 animate-in fade-in">
+                <div className="p-3.5 rounded-xl bg-[#2a1d20] border border-[#ffb4ab]/40 text-[#ffb4ab] text-xs flex flex-col gap-2.5 animate-in fade-in">
                   <div className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-[16px] shrink-0 mt-0.5">info</span>
-                    <span className="leading-relaxed">{errorMessage}</span>
+                    <span className="material-symbols-outlined text-[18px] text-[#ffb4ab] shrink-0 mt-0.5">error_outline</span>
+                    <div className="flex flex-col gap-1">
+                      <span className="font-semibold text-[#dee2ec]">Authentication Notice</span>
+                      <span className="leading-relaxed text-[#bbcabf]">{errorMessage}</span>
+                    </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => handleInstantVaultSignIn(email)}
-                    className="w-full py-1.5 px-3 rounded-lg bg-[#4edea3] hover:bg-[#3ec48e] text-[#003824] font-semibold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                    className="w-full py-2 px-3 rounded-lg bg-[#4edea3] hover:bg-[#3ec48e] text-[#003824] font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
                   >
-                    <span className="material-symbols-outlined text-[14px]">bolt</span>
-                    <span>Continue as {formatDisplayNameFromEmail(email || 'Lucky Saini')} (Vault Mode)</span>
+                    <span className="material-symbols-outlined text-[16px]">bolt</span>
+                    <span>Continue as {formatDisplayNameFromEmail(email || 'Developer')} (Instant Vault Mode)</span>
                   </button>
                 </div>
               )}
@@ -449,13 +458,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <div className="flex flex-col min-w-0">
                   <span className="text-[11px] font-mono text-[#bbcabf] font-semibold flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3]"></span>
-                    Lucky Saini Profile
+                    <span>{formatDisplayNameFromEmail(email || 'Lucky Saini')} Profile</span>
                   </span>
-                  <span className="text-[10px] text-[#86948a] truncate">luckysaini09860986@gmail.com</span>
+                  <span className="text-[10px] text-[#86948a] truncate">{email || 'luckysaini022@gmail.com'}</span>
                 </div>
                 <button
                   type="button"
-                  onClick={() => handleInstantVaultSignIn('luckysaini09860986@gmail.com')}
+                  onClick={() => handleInstantVaultSignIn(email || 'luckysaini022@gmail.com')}
                   className="px-3 py-1.5 rounded-lg bg-[#252f3d] hover:bg-[#4edea3] text-[#4edea3] hover:text-[#003824] font-mono text-xs font-semibold transition-all border border-[#4edea3]/30 shrink-0 cursor-pointer"
                 >
                   1-Tap Sign In

@@ -33,9 +33,20 @@ CodeVault is a cloud-native coding workspace, DSA practice platform, and snippet
 - Context-aware coding assistant powered by Google Gemini.
 - Capabilities include code explanation, bug detection, time/space complexity analysis, and DSA problem hint generation.
 
-### 5. Cloud Persistence & Authentication
-- **Firebase Authentication**: Email/Password and Google sign-in.
+### 5. Cloud Persistence & Resilient Authentication
+- **Firebase Authentication**: Native Google OAuth and Email/Password sign-in.
+- **Instant Vault Mode**: Zero-friction local authentication fallback that allows instant sign-in with your developer email even when offline or before cloud providers are configured.
 - **Cloud Firestore**: Real-time synchronization and storage of user-created snippets, bookmarks, and DSA solving progress.
+
+#### Enabling Live Cloud Email/Password in Firebase Console:
+If you see a notice that Email/Password is not enabled or domain is unauthorized:
+1. Open [Firebase Console](https://console.firebase.google.com/) and choose your project (`ai-studio-instantlayoutbui-15515df1-6d60-4a60-9842-6d16214301d8`).
+2. Navigate to **Build > Authentication > Sign-in method**.
+3. Click on **Email/Password**, toggle **Enable**, and click **Save**.
+4. To allow sign-in from your Netlify domain (`code-vault01.netlify.app`):
+   - Go to **Authentication > Settings > Authorized domains**.
+   - Click **Add domain**, enter `code-vault01.netlify.app`, and save.
+5. In CodeVault, you can also click **1-Tap Sign In** or **Continue (Instant Vault Mode)** to access your vault immediately without any setup required.
 
 ---
 
