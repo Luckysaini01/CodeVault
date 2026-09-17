@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="fixed top-0 w-full z-40 pt-safe bg-[#171c23]/90 backdrop-blur-xl border-b border-[#30353d]/40 shadow-[0_1px_8px_rgba(0,0,0,0.25)]">
-      <div className="h-14 px-4 flex items-center justify-between gap-2 max-w-5xl mx-auto">
+      <div className="h-14 px-4 flex items-center justify-between gap-2 max-w-6xl mx-auto">
         <div className="flex items-center gap-2 min-w-0">
           {isDetailView && (
             <button

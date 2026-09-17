@@ -74,13 +74,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full gap-5 max-w-lg mx-auto pb-10">
+    <div className="flex flex-col w-full gap-5 max-w-5xl mx-auto pb-10">
       {/* Welcome & Primary Action Bar */}
       <section className="flex flex-col gap-3 pt-1">
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5">
-              <h1 className="font-headline-lg-mobile text-[#dee2ec] tracking-tight font-semibold">
+              <h1 className="text-xl sm:text-2xl text-[#dee2ec] tracking-tight font-bold">
                 Welcome back, {user.name.split(' ')[0]}
               </h1>
               <span className="text-xl">👋</span>
@@ -125,7 +125,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         {/* Quick Add New Code High-Visibility CTA */}
         <button
           onClick={() => onNavigate('add-code')}
-          className="w-full h-12 bg-[#4edea3] text-[#003824] rounded-xl flex items-center justify-between px-4 shadow-md active:scale-[0.98] transition-all group cursor-pointer"
+          className="w-full h-12 bg-[#4edea3] hover:bg-[#3ec48e] text-[#003824] rounded-xl flex items-center justify-between px-4 shadow-md active:scale-[0.98] transition-all group cursor-pointer"
         >
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-[#003824]/15 flex items-center justify-center">
@@ -144,70 +144,73 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         </button>
       </section>
 
-      {/* Sandbox Status & Storage Micro-widget */}
-      <section className="bg-[#171c23] rounded-xl p-3 border border-[#30353d]/40 flex flex-col gap-2 shadow-sm relative overflow-hidden">
-        <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-[#4edea3]/5 rounded-full blur-xl pointer-events-none"></div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[#4edea3] text-[18px]">cloud_done</span>
-            <span className="font-label-md text-[#dee2ec]">Storage & Runtime</span>
+      {/* Top Cards: Storage Micro-widget & DSA Problem Practice Card (Side-by-side on tablet/desktop) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {/* Sandbox Status & Storage Micro-widget */}
+        <section className="bg-[#171c23] rounded-xl p-3.5 border border-[#30353d]/40 flex flex-col justify-between gap-3 shadow-sm relative overflow-hidden">
+          <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-[#4edea3]/5 rounded-full blur-xl pointer-events-none"></div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[#4edea3] text-[18px]">cloud_done</span>
+              <span className="font-label-md text-[#dee2ec]">Storage & Runtime</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-[#30353d] px-2 py-0.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3]"></span>
+              <span className="font-label-sm text-[#4edea3]">Healthy</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 bg-[#30353d] px-2 py-0.5 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3]"></span>
-            <span className="font-label-sm text-[#4edea3]">Healthy</span>
-          </div>
-        </div>
 
-        {/* Progress Meter */}
-        <div className="flex flex-col gap-1.5">
-          <div className="w-full h-2 bg-[#30353d] rounded-full overflow-hidden flex">
+          {/* Progress Meter */}
+          <div className="flex flex-col gap-1.5">
+            <div className="w-full h-2 bg-[#30353d] rounded-full overflow-hidden flex">
+              <div
+                className="bg-[#4edea3] h-full rounded-full transition-all duration-500"
+                style={{ width: `${(snippets.length / 500) * 100}%` }}
+              ></div>
+            </div>
+            <div className="flex justify-between items-center text-[#bbcabf] font-code-sm">
+              <span>{snippets.length} / 500 Codes Saved</span>
+              <span className="text-[#7bd0ff]">{((snippets.length / 500) * 100).toFixed(1)}% Vault Capacity</span>
+            </div>
+          </div>
+        </section>
+
+        {/* DSA Problem Practice Card */}
+        <section 
+          onClick={() => onNavigate('dsa')}
+          className="bg-[#1b222d] hover:bg-[#1f2838] transition-all cursor-pointer rounded-xl p-3.5 border border-[#30353d]/70 flex flex-col justify-between gap-3 shadow-sm relative overflow-hidden group"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-[#4edea3]/15 text-[#4edea3] flex items-center justify-center">
+                <span className="material-symbols-outlined text-[18px]">psychology</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-semibold text-sm text-[#dee2ec] group-hover:text-[#4edea3] transition-colors">
+                  DSA Problem Tracker
+                </span>
+                <span className="text-[11px] font-mono text-[#bbcabf]">
+                  {dsaStats.solved} of {dsaStats.total} problems completed ({dsaStats.pct}%)
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-[#4edea3] text-xs font-mono font-semibold">
+              <span>Solve</span>
+              <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">
+                arrow_forward
+              </span>
+            </div>
+          </div>
+
+          {/* DSA Progress Bar */}
+          <div className="w-full h-2 bg-[#0e131a] rounded-full overflow-hidden">
             <div
-              className="bg-[#4edea3] h-full rounded-full transition-all duration-500"
-              style={{ width: `${(snippets.length / 500) * 100}%` }}
-            ></div>
+              className="h-full bg-gradient-to-r from-[#4edea3] to-[#4cd7f6] rounded-full transition-all duration-500"
+              style={{ width: `${Math.max(dsaStats.pct, 4)}%` }}
+            />
           </div>
-          <div className="flex justify-between items-center text-[#bbcabf] font-code-sm">
-            <span>{snippets.length} / 500 Codes Saved</span>
-            <span className="text-[#7bd0ff]">{((snippets.length / 500) * 100).toFixed(1)}% Vault Capacity</span>
-          </div>
-        </div>
-      </section>
-
-      {/* DSA Problem Practice Card */}
-      <section 
-        onClick={() => onNavigate('dsa')}
-        className="bg-[#1b222d] hover:bg-[#1f2838] transition-all cursor-pointer rounded-xl p-3.5 border border-[#30353d]/70 flex flex-col gap-2.5 shadow-sm relative overflow-hidden group"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#4edea3]/15 text-[#4edea3] flex items-center justify-center">
-              <span className="material-symbols-outlined text-[18px]">psychology</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-semibold text-sm text-[#dee2ec] group-hover:text-[#4edea3] transition-colors">
-                DSA Problem Tracker
-              </span>
-              <span className="text-[11px] font-mono text-[#bbcabf]">
-                {dsaStats.solved} of {dsaStats.total} problems completed ({dsaStats.pct}%)
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center gap-1 text-[#4edea3] text-xs font-mono font-semibold">
-            <span>Solve</span>
-            <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">
-              arrow_forward
-            </span>
-          </div>
-        </div>
-
-        {/* DSA Progress Bar */}
-        <div className="w-full h-2 bg-[#0e131a] rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-[#4edea3] to-[#4cd7f6] rounded-full transition-all duration-500"
-            style={{ width: `${Math.max(dsaStats.pct, 4)}%` }}
-          />
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Stats Metrics Grid (Language Breakdown) */}
       <section className="flex flex-col gap-2">
@@ -219,12 +222,12 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           <span className="font-label-sm text-[#bbcabf]">5 Dialects</span>
         </div>
 
-        {/* Grid: 2 columns for mobile ergonomics */}
-        <div className="grid grid-cols-2 gap-2">
-          {/* Total Codes Card (Span 2) */}
+        {/* Grid: 2 columns on mobile, 4 on tablet/desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+          {/* Total Codes Card (Span full on mobile & md) */}
           <div 
             onClick={() => onNavigate('my-codes')}
-            className="col-span-2 bg-[#1b2027] rounded-xl p-3 border border-[#30353d]/40 flex items-center justify-between shadow-sm relative overflow-hidden cursor-pointer hover:border-[#4edea3]/40 transition-all"
+            className="col-span-2 sm:col-span-2 md:col-span-4 bg-[#1b2027] rounded-xl p-3 border border-[#30353d]/40 flex items-center justify-between shadow-sm relative overflow-hidden cursor-pointer hover:border-[#4edea3]/40 transition-all"
           >
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-lg bg-[#30353d] flex items-center justify-center text-[#4edea3]">
@@ -334,9 +337,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </button>
         </div>
 
-        {/* Snippet List */}
-        <div className="flex flex-col gap-2.5">
-          {snippets.slice(0, 3).map((snippet) => {
+        {/* Snippet List: responsive grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {snippets.slice(0, 6).map((snippet) => {
             const isCompiling = runningSnippetId === snippet.id;
             const isDone = runSuccessId === snippet.id;
 
@@ -347,7 +350,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                   onSelectSnippet(snippet);
                   onNavigate('snippet-inspector');
                 }}
-                className="bg-[#1b2027] rounded-xl p-3 border border-[#30353d]/40 flex flex-col gap-2 shadow-sm transition-all hover:bg-[#252a32] cursor-pointer"
+                className="bg-[#1b2027] rounded-xl p-3.5 border border-[#30353d]/40 flex flex-col justify-between gap-2.5 shadow-sm transition-all hover:bg-[#252a32] hover:border-[#4edea3]/30 cursor-pointer"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex flex-col min-w-0">
@@ -363,15 +366,15 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                       </span>
                     </div>
                   </div>
-                  <span className="font-code-sm text-[#bbcabf] flex items-center gap-1 flex-shrink-0">
-                    <span className="material-symbols-outlined text-[14px]">schedule</span> {snippet.updatedAt}
+                  <span className="font-code-sm text-[#bbcabf] flex items-center gap-1 flex-shrink-0 text-xs">
+                    <span className="material-symbols-outlined text-[13px]">schedule</span> {snippet.updatedAt}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between pt-1 border-t border-[#30353d]/30 mt-1">
-                  <div className="flex items-center gap-1.5 text-[#bbcabf] font-code-sm">
-                    <span className="w-2 h-2 rounded-full bg-[#4edea3]"></span>
-                    <span>{snippet.complexity || 'Compiled 0 errors'}</span>
+                <div className="flex items-center justify-between pt-2 border-t border-[#30353d]/30 mt-1">
+                  <div className="flex items-center gap-1.5 text-[#bbcabf] font-code-sm text-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3]"></span>
+                    <span className="truncate max-w-[120px]">{snippet.complexity || 'Compiled 0 errors'}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <button
@@ -380,18 +383,18 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                         onSelectSnippet(snippet);
                         onNavigate('snippet-inspector');
                       }}
-                      className="h-8 px-2.5 rounded-lg bg-[#30353d] text-[#dee2ec] font-code-sm font-medium hover:bg-[#343941] active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+                      className="h-7 sm:h-8 px-2.5 rounded-lg bg-[#30353d] text-[#dee2ec] font-code-sm font-medium hover:bg-[#343941] active:scale-95 transition-all flex items-center gap-1 cursor-pointer text-xs"
                     >
-                      <span className="material-symbols-outlined text-[16px]">visibility</span> View
+                      <span className="material-symbols-outlined text-[15px]">visibility</span> View
                     </button>
                     <button
                       onClick={(e) => handleRunSnippet(e, snippet)}
-                      className="h-8 px-3 rounded-lg bg-[#4edea3] text-[#003824] font-code-sm font-semibold hover:bg-[#6ffbbe] active:scale-95 transition-all flex items-center gap-1 shadow-sm cursor-pointer"
+                      className="h-7 sm:h-8 px-3 rounded-lg bg-[#4edea3] text-[#003824] font-code-sm font-semibold hover:bg-[#6ffbbe] active:scale-95 transition-all flex items-center gap-1 shadow-sm cursor-pointer text-xs"
                     >
-                      <span className={`material-symbols-outlined text-[16px] ${isCompiling ? 'animate-spin' : ''}`}>
+                      <span className={`material-symbols-outlined text-[15px] ${isCompiling ? 'animate-spin' : ''}`}>
                         {isCompiling ? 'refresh' : isDone ? 'check' : 'play_arrow'}
                       </span>
-                      <span>{isCompiling ? 'Compiling...' : isDone ? 'Done (14ms)' : 'Run'}</span>
+                      <span>{isCompiling ? 'Compiling...' : isDone ? 'Done' : 'Run'}</span>
                     </button>
                   </div>
                 </div>
@@ -402,19 +405,19 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       </section>
 
       {/* Execution Quick Banner */}
-      <section className="bg-[#171c23] rounded-xl p-3 border border-[#30353d]/40 flex items-center justify-between gap-2 shadow-sm">
+      <section className="bg-[#171c23] rounded-xl p-3.5 border border-[#30353d]/40 flex items-center justify-between gap-2 shadow-sm">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-lg bg-[#252a32] flex items-center justify-center text-[#4cd7f6]">
+          <div className="w-9 h-9 rounded-lg bg-[#252a32] flex items-center justify-center text-[#4cd7f6] shrink-0">
             <span className="material-symbols-outlined text-[20px]">bolt</span>
           </div>
-          <div className="flex flex-col">
-            <span className="font-code-sm font-medium text-[#dee2ec]">Interactive Sandbox</span>
-            <span className="font-body-sm text-[#bbcabf]">Hot-reload enabled on GCC & PyPy</span>
+          <div className="flex flex-col min-w-0">
+            <span className="font-code-sm font-medium text-[#dee2ec]">Interactive Sandbox IDE</span>
+            <span className="font-body-sm text-[#bbcabf] truncate">Direct cloud execution via Wandbox GCC & PyPy compilers</span>
           </div>
         </div>
         <button
           onClick={() => onNavigate('public-runner')}
-          className="px-2.5 py-1.5 rounded-lg bg-[#1b2027] text-[#4cd7f6] hover:text-[#acedff] font-code-sm font-medium flex items-center gap-1 active:scale-95 transition-all cursor-pointer"
+          className="px-3 py-1.5 rounded-lg bg-[#1b2027] hover:bg-[#252f3d] text-[#4cd7f6] font-code-sm font-semibold flex items-center gap-1 active:scale-95 transition-all cursor-pointer shrink-0 border border-[#4cd7f6]/20"
         >
           Launch <span className="material-symbols-outlined text-[14px]">arrow_outward</span>
         </button>

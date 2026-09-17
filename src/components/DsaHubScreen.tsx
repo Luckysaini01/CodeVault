@@ -811,9 +811,9 @@ export const DsaHubScreen: React.FC<DsaHubScreenProps> = ({
             </div>
 
             {/* Split Screen Container */}
-            <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+            <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 overflow-y-auto lg:overflow-hidden">
               {/* Left Column: Problem, Hints, Editorial, Solution, Notes */}
-              <div className="lg:col-span-5 flex flex-col border-b lg:border-b-0 lg:border-r border-[#30353d] overflow-hidden bg-[#121820]">
+              <div className="lg:col-span-5 flex flex-col border-b lg:border-b-0 lg:border-r border-[#30353d] overflow-y-auto lg:overflow-hidden bg-[#121820] min-h-[280px] lg:min-h-0 shrink-0">
                 {/* Tab Switcher */}
                 <div className="h-10 px-2 bg-[#171c23] border-b border-[#30353d] flex items-center gap-1 overflow-x-auto shrink-0">
                   {(
@@ -1066,7 +1066,7 @@ export const DsaHubScreen: React.FC<DsaHubScreenProps> = ({
               </div>
 
               {/* Right Column: Multi-Language Code Editor + Runner */}
-              <div className="lg:col-span-7 flex flex-col bg-[#171c23] overflow-hidden">
+              <div className="lg:col-span-7 flex flex-col bg-[#171c23] overflow-hidden min-h-[440px] lg:min-h-0">
                 {/* Editor Language & Action Bar */}
                 <div className="h-10 px-3 bg-[#121820] border-b border-[#30353d] flex items-center justify-between shrink-0">
                   <div className="flex items-center gap-1.5">

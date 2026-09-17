@@ -134,33 +134,33 @@ export const MyCodesScreen: React.FC<MyCodesScreenProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full space-y-4 max-w-lg mx-auto pb-10">
+    <div className="flex flex-col w-full space-y-4 max-w-6xl mx-auto pb-10">
       {/* Header Banner */}
-      <div className="relative w-full overflow-hidden rounded-xl bg-[#171c23] p-3.5 border border-[#30353d]/40 shadow-md">
+      <div className="relative w-full overflow-hidden rounded-xl bg-[#171c23] p-4 sm:p-5 border border-[#30353d]/40 shadow-md">
         <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-[#4edea3]/10 blur-2xl pointer-events-none"></div>
         <div className="flex flex-col gap-1 relative z-10">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#4edea3] text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+              <span className="material-symbols-outlined text-[#4edea3] text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                 folder_special
               </span>
-              <span className="font-headline-lg-mobile text-[#dee2ec] font-semibold">
+              <span className="text-xl sm:text-2xl text-[#dee2ec] font-bold">
                 My Codes Library
               </span>
             </div>
-            <span className="font-code-sm px-2 py-0.5 rounded-full bg-[#4edea3]/10 text-[#4edea3] font-medium flex items-center gap-1">
+            <span className="font-code-sm px-2.5 py-1 rounded-full bg-[#4edea3]/10 text-[#4edea3] font-medium flex items-center gap-1.5 border border-[#4edea3]/20">
               <span className="w-1.5 h-1.5 rounded-full bg-[#4edea3] animate-pulse"></span>
               {snippets.length} Synced
             </span>
           </div>
-          <p className="font-body-sm text-[#bbcabf]">
-            Private collection accessible only by you ({snippets.length} codes)
+          <p className="font-body-sm text-[#bbcabf] max-w-2xl">
+            Private repository collection accessible with instant sandboxed compiler execution ({snippets.length} codes across all stacks)
           </p>
         </div>
       </div>
 
       {/* Search & Filters Container */}
-      <div className="flex flex-col gap-2.5 bg-[#171c23] p-3 rounded-xl border border-[#30353d]/40 shadow-sm">
+      <div className="flex flex-col gap-3 bg-[#171c23] p-3.5 sm:p-4 rounded-xl border border-[#30353d]/40 shadow-sm">
         {/* Search Field */}
         <div className="relative w-full flex items-center">
           <span className="material-symbols-outlined absolute left-3 text-[#bbcabf] text-[18px]">
@@ -176,7 +176,7 @@ export const MyCodesScreen: React.FC<MyCodesScreenProps> = ({
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 text-[#bbcabf] hover:text-[#dee2ec] flex items-center cursor-pointer"
+              className="absolute right-2.5 text-[#bbcabf] hover:text-[#dee2ec] flex items-center cursor-pointer p-1"
               title="Clear search"
             >
               <span className="material-symbols-outlined text-[16px]">close</span>
@@ -202,12 +202,12 @@ export const MyCodesScreen: React.FC<MyCodesScreenProps> = ({
         </div>
 
         {/* Dropdown Bars */}
-        <div className="grid grid-cols-2 gap-2 pt-0.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 pt-0.5">
           <div className="relative">
             <select
               value={selectedTopic}
               onChange={(e) => setSelectedTopic(e.target.value)}
-              className="w-full appearance-none bg-[#0f141b] text-[#dee2ec] font-code-sm py-1.5 pl-2.5 pr-7 rounded-lg outline-none border border-[#30353d]/50 focus:border-[#4edea3]/50 cursor-pointer"
+              className="w-full appearance-none bg-[#0f141b] text-[#dee2ec] font-code-sm py-2 pl-3 pr-8 rounded-lg outline-none border border-[#30353d]/50 focus:border-[#4edea3]/50 cursor-pointer"
             >
               {availableTopics.map((topic) => (
                 <option key={topic} value={topic}>
@@ -215,7 +215,7 @@ export const MyCodesScreen: React.FC<MyCodesScreenProps> = ({
                 </option>
               ))}
             </select>
-            <span className="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[16px] text-[#bbcabf]">
+            <span className="material-symbols-outlined pointer-events-none absolute right-2.5 top-2.5 text-[16px] text-[#bbcabf]">
               expand_more
             </span>
           </div>
@@ -224,21 +224,21 @@ export const MyCodesScreen: React.FC<MyCodesScreenProps> = ({
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest' | 'alpha')}
-              className="w-full appearance-none bg-[#0f141b] text-[#dee2ec] font-code-sm py-1.5 pl-2.5 pr-7 rounded-lg outline-none border border-[#30353d]/50 focus:border-[#4edea3]/50 cursor-pointer"
+              className="w-full appearance-none bg-[#0f141b] text-[#dee2ec] font-code-sm py-2 pl-3 pr-8 rounded-lg outline-none border border-[#30353d]/50 focus:border-[#4edea3]/50 cursor-pointer"
             >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest</option>
               <option value="alpha">Title A-Z</option>
             </select>
-            <span className="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[16px] text-[#bbcabf]">
+            <span className="material-symbols-outlined pointer-events-none absolute right-2.5 top-2.5 text-[16px] text-[#bbcabf]">
               sort
             </span>
           </div>
         </div>
 
         {/* View Toggle & Metrics */}
-        <div className="flex items-center justify-between pt-1 border-t border-[#30353d]/30">
-          <span className="font-code-sm text-[#bbcabf]">
+        <div className="flex items-center justify-between pt-2 border-t border-[#30353d]/30">
+          <span className="font-code-sm text-[#bbcabf] text-xs sm:text-sm">
             Showing <span className="text-[#4edea3] font-medium">{filteredSnippets.length}</span> of{' '}
             {snippets.length} repositories
           </span>
@@ -269,8 +269,8 @@ export const MyCodesScreen: React.FC<MyCodesScreenProps> = ({
         </div>
       </div>
 
-      {/* Snippets Deck */}
-      <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 gap-3' : 'flex flex-col gap-3'}>
+      {/* Snippets Deck: Responsive Grid (1 col mobile, 2 cols tablet, 3 cols desktop) */}
+      <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5' : 'flex flex-col gap-3'}>
         {filteredSnippets.length === 0 ? (
           <div className="p-6 sm:p-8 text-center bg-[#171c23] rounded-xl border border-[#30353d]/40 flex flex-col items-center">
             <span className="material-symbols-outlined text-[36px] text-[#86948a] mb-2">code_off</span>

@@ -98,11 +98,11 @@ int main() {
   };
 
   return (
-    <div className="flex flex-col w-full gap-y-8 overflow-hidden pb-8 max-w-lg mx-auto">
+    <div className="flex flex-col w-full gap-y-8 overflow-hidden pb-8 max-w-4xl mx-auto px-2 sm:px-4">
       {/* Ambient background glow elements */}
       <div className="relative w-full">
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-72 h-44 bg-[#4edea3]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
-        <div className="absolute top-48 -right-12 w-48 h-48 bg-[#4cd7f6]/10 rounded-full blur-2xl pointer-events-none -z-10"></div>
+        <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-96 h-44 bg-[#4edea3]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <div className="absolute top-48 -right-12 w-64 h-64 bg-[#4cd7f6]/10 rounded-full blur-2xl pointer-events-none -z-10"></div>
 
         {/* Hero Content */}
         <section className="flex flex-col items-center text-center px-1 pt-3">
@@ -117,7 +117,7 @@ int main() {
           </div>
 
           {/* Headline */}
-          <h1 className="font-headline-xl-mobile text-[#dee2ec] font-bold tracking-tight max-w-xs">
+          <h1 className="text-2xl sm:text-4xl text-[#dee2ec] font-bold tracking-tight max-w-lg">
             Save Your Code. <br />
             <span className="text-[#4edea3] bg-gradient-to-r from-[#4edea3] to-[#4cd7f6] bg-clip-text text-transparent">
               Run It Anywhere.
@@ -125,13 +125,13 @@ int main() {
           </h1>
 
           {/* Subtitle */}
-          <p className="font-body-md text-[#bbcabf] mt-2 max-w-sm px-1">
+          <p className="font-body-md text-[#bbcabf] mt-2 max-w-md px-1">
             Store your college, DSA, and programming codes securely and execute code directly from the browser.
           </p>
 
           {/* Instant Search Bar Button */}
           {onOpenSearch && (
-            <div className="w-full max-w-sm mt-4">
+            <div className="w-full max-w-md mt-4">
               <button
                 onClick={onOpenSearch}
                 className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#171c23] hover:bg-[#1f2631] border border-[#30353d]/70 text-xs font-mono text-[#bbcabf] hover:text-[#dee2ec] transition-all cursor-pointer group shadow-sm"
@@ -146,7 +146,7 @@ int main() {
           )}
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-2 w-full max-w-sm mt-3">
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full max-w-md mt-3">
             <button
               onClick={() => onNavigate('my-codes')}
               className="w-full sm:flex-1 h-11 px-3 bg-[#4edea3] text-[#003824] font-code-md font-bold rounded-lg flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(78,222,163,0.35)] active:scale-95 transition-all cursor-pointer"
@@ -349,8 +349,8 @@ int main() {
           <p className="font-body-sm text-[#bbcabf]">Everything required to manage high-stakes code logic</p>
         </div>
 
-        {/* 2-Column Grid */}
-        <div className="grid grid-cols-2 gap-2.5">
+        {/* Responsive Capabilities Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {/* Card 1: Save Code */}
           <div 
             onClick={() => onNavigate('add-code')}
