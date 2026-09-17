@@ -1,0 +1,119 @@
+{
+  "entities": {
+    "Snippet": {
+      "title": "Snippet",
+      "description": "A saved code snippet or DSA algorithm in the CodeVault database.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the snippet"
+        },
+        "title": {
+          "type": "string",
+          "description": "Snippet title",
+          "maxLength": 200
+        },
+        "language": {
+          "type": "string",
+          "description": "Programming language code",
+          "maxLength": 20
+        },
+        "languageLabel": {
+          "type": "string",
+          "description": "Display name of the programming language",
+          "maxLength": 50
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic or category tag",
+          "maxLength": 100
+        },
+        "tags": {
+          "type": "array",
+          "description": "Keywords or category tags"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update"
+        },
+        "description": {
+          "type": "string",
+          "description": "Short explanation of the code snippet",
+          "maxLength": 1000
+        },
+        "code": {
+          "type": "string",
+          "description": "The complete source code of the snippet",
+          "maxLength": 50000
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional developer notes",
+          "maxLength": 2000
+        },
+        "runtimeSpec": {
+          "type": "string",
+          "description": "Runtime environment description",
+          "maxLength": 200
+        },
+        "complexity": {
+          "type": "string",
+          "description": "Time/space complexity",
+          "maxLength": 100
+        },
+        "starred": {
+          "type": "boolean",
+          "description": "Whether snippet is marked as favorite"
+        }
+      },
+      "required": ["title", "language", "code"]
+    },
+    "DsaProgress": {
+      "title": "DSA Progress",
+      "description": "Tracks problem status, solved state, and user solutions for DSA problems.",
+      "type": "object",
+      "properties": {
+        "problemId": {
+          "type": "string",
+          "description": "Unique identifier of the DSA problem"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status: solved, attempting, or todo"
+        },
+        "solvedAt": {
+          "type": "string",
+          "description": "Timestamp when solved"
+        },
+        "language": {
+          "type": "string",
+          "description": "Language used for the solution"
+        },
+        "userCode": {
+          "type": "string",
+          "description": "User's submitted or written code"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Personal developer notes for this DSA problem"
+        },
+        "bookmarked": {
+          "type": "boolean",
+          "description": "Whether problem is starred or bookmarked"
+        }
+      },
+      "required": ["problemId", "status"]
+    }
+  },
+  "firestore": {
+    "/snippets/{snippetId}": {
+      "schema": "Snippet",
+      "description": "Stores user code snippets and algorithms"
+    },
+    "/dsaProgress/{problemId}": {
+      "schema": "DsaProgress",
+      "description": "Stores user progress, completion, and custom solutions for DSA practice problems"
+    }
+  }
+}

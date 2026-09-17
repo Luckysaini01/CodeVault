@@ -1,0 +1,6 @@
+{
+  "name": "CodeVault",
+  "description": "Store and run college, DSA, and programming code snippets securely in an isolated browser sandbox with real-time telemetry.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

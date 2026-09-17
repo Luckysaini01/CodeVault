@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Default-Deny Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Security and Integrity Primitives
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function isValidSnippet(data) {
+      return data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+             data.language is string && data.language.size() > 0 && data.language.size() <= 30 &&
+             data.code is string && data.code.size() > 0 && data.code.size() <= 50000 &&
+             (!('description' in data) || (data.description is string && data.description.size() <= 1000)) &&
+             (!('topic' in data) || (data.topic is string && data.topic.size() <= 100)) &&
+             (!('languageLabel' in data) || (data.languageLabel is string && data.languageLabel.size() <= 50)) &&
+             (!('tags' in data) || (data.tags is list && data.tags.size() <= 20)) &&
+             (!('starred' in data) || data.starred is bool) &&
+             (!('notes' in data) || (data.notes is string && data.notes.size() <= 2000)) &&
+             (!('runtimeSpec' in data) || (data.runtimeSpec is string && data.runtimeSpec.size() <= 200)) &&
+             (!('complexity' in data) || (data.complexity is string && data.complexity.size() <= 100)) &&
+             (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 100));
+    }
+
+    function isValidDsaProgress(data) {
+      return data.problemId is string && data.problemId.size() > 0 && data.problemId.size() <= 100 &&
+             data.status is string && (data.status == 'solved' || data.status == 'attempting' || data.status == 'todo') &&
+             (!('language' in data) || (data.language is string && data.language.size() <= 30)) &&
+             (!('userCode' in data) || (data.userCode is string && data.userCode.size() <= 50000)) &&
+             (!('notes' in data) || (data.notes is string && data.notes.size() <= 2000)) &&
+             (!('bookmarked' in data) || data.bookmarked is bool) &&
+             (!('solvedAt' in data) || (data.solvedAt is string && data.solvedAt.size() <= 100));
+    }
+
+    match /snippets/{snippetId} {
+      allow get, list: if true;
+      allow create: if isValidId(snippetId) && isValidSnippet(incoming());
+      allow update: if isValidId(snippetId) && isValidSnippet(incoming());
+      allow delete: if isValidId(snippetId);
+    }
+
+    match /dsaProgress/{problemId} {
+      allow get, list: if true;
+      allow create, update: if isValidId(problemId) && isValidDsaProgress(incoming());
+      allow delete: if isValidId(problemId);
+    }
+
+    match /test/{docId} {
+      allow read: if true;
+    }
+  }
+}
